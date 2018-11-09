@@ -28,7 +28,7 @@ func main() {
 	go player("Nadal", court)
 	go player("Djokovic", court)
 
-	// Start the set.
+	// Start the set (write 1 to the court channel)
 	court <- 1
 
 	// Wait for the game to finish.
@@ -39,6 +39,7 @@ func main() {
 func player(name string, court chan int) {
 	// Schedule the call to Done to tell main we are done.
 	defer wg.Done()
+
 	for {
 		// Wait for the ball to be hit back to us.
 		ball, ok := <-court
@@ -47,7 +48,8 @@ func player(name string, court chan int) {
 			fmt.Printf("Player %s Won\n", name)
 			return
 		}
-		// Pick a random number and see if we miss the bal
+
+		// Pick a random number and see if we miss the ball
 		n := rand.Intn(100)
 		if n%13 == 0 {
 			fmt.Printf("Player %s Missed\n", name)

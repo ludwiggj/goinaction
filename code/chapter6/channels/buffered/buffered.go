@@ -42,8 +42,8 @@ func main() {
 		tasks <- fmt.Sprintf("Task : %d", post)
 	}
 
-	// Close the channel so the goroutines will quit
-	// when all the work is done.
+	// Close the channel so the goroutines will quit when all the work is done.
+	// Work can still be received on chnnel, but not sent to the channel
 	close(tasks)
 
 	// Wait for all the work to get done.
